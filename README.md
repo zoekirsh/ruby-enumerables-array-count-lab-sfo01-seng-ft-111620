@@ -1,47 +1,207 @@
-# Lab Title
-
-All Readmes and Labs should follow a similar format when it comes to structure.
-Please refer to the [style guide][] for a detailed explaination of standards.
-
-## Learning Goals
-
-- [Check out this Readme on writing Learning Goals][goals]
+# Array Count Lab
 
 ## Introduction
 
-Sometimes called an Overview, this section should contain a brief summary of
-what the lesson contains. Great introductions present a problem that is solved
-by the concepts reviewed in this lesson.
+One of the most commonly used enumerables happens to be one you might have
+already seen - `count`.
 
-## Contents
+When dealing with `Array`s, we can use `count` to find the total number of
+elements in the array.
 
-Lessons often contain multiple sections of content. Use the Learning Goals
-you've defined to guide you on what sections and sub-sections are needed.
+```rb
+[1, 2, 3].count # => 3
+```
 
-Refer to [this guide for assistance when writing Readmes][readmes]
+You may have noticed in some previous examples, instead of `count`, we might
+have used `length`.
 
-In Labs, clear answers are often omitted. However, some guidance may be
-necessary to ensure students have the necessary information required to figure
-out the task themselves.
+```rb
+[1, 2, 3].length # => 3
+```
+
+In fact, there is a third alias, `size`, that also works:
+
+```rb
+[1, 2, 3].size # => 3
+```
+
+For this sort of task - "reducing" an **entire** array of data down to a single
+value - the three terms are interchangeable.
+
+However, `count` has additional functionality that `length` and `size` do not
+have. [`count` is an _enumerable_][count].
+
+In this lesson, we're going to take a deeper look at `count`, why it is
+different than `length` and `size`, and how it is useful. At the end, you will
+be tasked with writing your own 
+
+## `count` vs `length` and `size`
+
+`length` and `size` are both built-in methods for `Array`s that serve a single
+task - get the **pre-computed** total number of elements in a given array. That
+is all they do (though we've seen working with `while` loops that this alone can
+be pretty useful). `Array`s always keep track of their size, and these methods
+just access that information.
+
+As we mentioned, `count` is an enumerable. Enumerables are _available_ to all
+`Array`s, but operate a bit differently - they always _enumerate_; they move
+over elements in a collection one by one. `count` doesn't just ask an `Array for
+information it already knows, it _counts_ every element.
+
+Because `count` goes through the work of enumerating over each element, we have
+some additional control over _how_ it counts. We can do this by passing a
+block to `count`.
+
+```rb
+[1, 2, 3,].count do |element|
+  # code in here runs every time count enumerates over an element
+  # that element is available as the name we define inside the pipes above
+end
+```
+
+A **block** in Ruby refers to code inside `do...end` or curly braces `{}`. We've
+seen them before with `while` loops. The code stored inside will run every time
+the block is called. In this case, the code will run for every element in the
+array `count` is called from. We can access the current element as whatever name
+we define inside the pipes after `do`. In this case, we used `element`, but we
+could choose whatever name we'd like.
+
+In the block, we include code that will determine whether or not to count the
+current element. For instance, in an array of integers, maybe we only want to
+count elements that are _even_:
+
+```rb
+[1, 2, 3, 4].count do |element|
+  element.even?
+end
+```
+
+`count` will count **every time the block returns a truthy value**. In the case
+above, `count` is checking if each element is even, going through the array
+elements like so:
+
+```rb
+1.even? # => false
+2.even? # => true
+3.even? # => false
+4.even? # => true
+```
+
+Since there are two expressions that evaluate to `true`, `count` returns `2` as
+the result.
+
+## Haven't We Seen This Before?
+
+If you recall, we implemented code for counting even values in an earlier
+lesson. Back then, we  usied `while` loops and wrote something similar to the
+following:
+
+```rb
+total = 0
+array = [1, 2, 3, 4]
+index = 0
+
+while index < array.length do
+  if array[index].even?
+    total += 1 # total is only incremented when the current array element is even
+  end
+  index += 1
+end
+total
+```
+
+`count` simply provides a streamlined way to accomplish this task. Let's
+consider another example. Imagine we had an array of numbers and we only wanted
+to count those that are _positive_.
+
+```rb
+array = [0, 1, -9, 24, 5, -10]
+```
+
+Using a `while` loop, we could modify the conditional statement to check if each
+element is greater than zero.
+
+```rb
+...
+if array[index] > 0
+  total += 1 # only increments when teh current element is greater than zero
+end
+...
+```
+
+Using `count` and a block, we do the same:
+
+```rb
+array.count do |num|
+  num > 0
+end
+ # => 3
+```
+
+If we wanted to use the curly brace syntax instead:
+
+```rb
+array.count { |num| num > 0 }
+  # => 3
+```
+
+Both forms are valid, though Rubyists tend to use `do..end` for readability if
+there are multiple lines of code in the block.
+
+## Instructions
+
+It's time to practice what we've learned. For this lab, your task is to
+implement two methods using `count`. Complete your work in `lib/array_count.rb`
+and run `learn` to check your code.
+
+### `count_strings`
+
+The `count_strings` method takes in an array of different data types, enumerates
+over them and returns the total number of `String`s present in the array. For
+example, if we had the following array:
+
+```rb
+array = [1, "hello", [], 5.01, "world", :name, { a: 1 }]
+```
+
+Passed into `count_strings`, we should get `2` in return.
+
+```rb
+count_strings(array)
+ # => 2
+```
+
+### `count_empty_subarrays`
+
+The `count_empty_strings` method is a slight variation on the last method - it
+takes in an array of different data types and returns the total number of
+_empty_ `String`s present. For example, if we had the
+following array:
+
+```rb
+array = [ "", "Hello", 4, [], "", "" ]
+```
+
+Passed into `count_empty_strings`, we should get `3` in return.
+
+```rb
+count_empty_strings(array)
+ # => 3
+```
 
 ## Conclusion
 
-Wrap up the lesson with a brief review of what was covered. This is often a good
-place to connect the concepts discussed within a larger context.
+The `count` enumerable is handy way to count things in a specific way. Unlike
+the `length` and `size` array methods, `count` enumerates over every element in
+a collection. Because it enumerates, we are able to use a block to customize
+what `count` considers worthy of counting.
+
+We will soon see that all the enumerables we learn about will use a block this
+way. They all have the ability to step through a collection, and at every step,
+_yield_ some control to us via a block.
 
 ## Resources
 
-This is an optional section, but list and link to resources, articles, and
-websites that you think will be beneficial for additional reading. Also, if your
-written contents included external links, it may be good to add a second
-reference here:
+- [Ruby Documentation on `count` Enumerable][count]
 
-- [Style Guide][style guide]
-- [Writing Learning Goals][goals]
-- [Writing Readmes][readmes]
-
-[style guide]: https://github.com/learn-co-curriculum/curriculum-team/blob/master/writing/style_guide.md
-[goals]: https://github.com/learn-co-curriculum/curriculum-team/blob/master/writing/creation-content-focus-learning_objectives.md
-[readmes]: https://github.com/learn-co-curriculum/curriculum-team/blob/master/writing/creation-content-focus-writing_readme.md
-
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/readme-template' title='Readme Template.'>Readme Template.</p>
+[count]: https://ruby-doc.org/core-2.7.0/Enumerable.html#method-i-count
