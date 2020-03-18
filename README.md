@@ -2,7 +2,7 @@
 
 ## Introduction
 
-One of the most commonly used enumerables happens to be one you might have
+One of the most commonly used Enumerables happens to be one you might have
 already seen - `count`.
 
 When dealing with `Array`s, we can use `count` to find the total number of
@@ -31,7 +31,7 @@ value - the three terms are interchangeable.
 However, `count` has additional functionality that `length` and `size` do not
 have. [`count` is an _enumerable_][count].
 
-In this lesson, we're going to take a deeper look at `count`, why it is
+In this lesson, we're going to take a more in-depth look at `count`, why it is
 different than `length` and `size`, and how it is useful. At the end, you will
 be tasked with writing your own 
 
@@ -41,12 +41,12 @@ be tasked with writing your own
 task - get the **pre-computed** total number of elements in a given array. That
 is all they do (though we've seen working with `while` loops that this alone can
 be pretty useful). `Array`s always keep track of their size, and these methods
-just access that information.
+access that information.
 
-As we mentioned, `count` is an enumerable. Enumerables are _available_ to all
+As we mentioned, `count` is an Enumerable. Enumerables are _available_ to all
 `Array`s, but operate a bit differently - they always _enumerate_; they move
-over elements in a collection one by one. `count` doesn't just ask an `Array for
-information it already knows, it _counts_ every element.
+over elements in a collection one by one. `count` doesn't just ask an `Array` for
+information it already knows. It _counts_ every element.
 
 Because `count` goes through the work of enumerating over each element, we have
 some additional control over _how_ it counts. We can do this by passing a
@@ -87,13 +87,13 @@ elements like so:
 4.even? # => true
 ```
 
-Since there are two expressions that evaluate to `true`, `count` returns `2` as
+Since two expressions evaluate to `true`, `count` returns `2` as
 the result.
 
 ## Haven't We Seen This Before?
 
 If you recall, we implemented code for counting even values in an earlier
-lesson. Back then, we  usied `while` loops and wrote something similar to the
+lesson. Back then, we used `while` loops and wrote something similar to the
 following:
 
 ```rb
@@ -110,9 +110,9 @@ end
 total
 ```
 
-`count` simply provides a streamlined way to accomplish this task. Let's
-consider another example. Imagine we had an array of numbers and we only wanted
-to count those that are _positive_.
+`count` provides a streamlined way to accomplish this task. Let's consider
+another example. Imagine we had an array of numbers, and we only wanted to count
+those that are _positive_.
 
 ```rb
 array = [0, 1, -9, 24, 5, -10]
@@ -191,13 +191,13 @@ count_empty_strings(array)
 
 ## Conclusion
 
-The `count` enumerable is handy way to count things in a specific way. Unlike
+The `count` Enumerable is handy way to count things in a specific way. Unlike
 the `length` and `size` array methods, `count` enumerates over every element in
-a collection. Because it enumerates, we are able to use a block to customize
+a collection. Because it enumerates, we can use a block to customize
 what `count` considers worthy of counting.
 
-We will soon see that all the enumerables we learn about will use a block this
-way. They all have the ability to step through a collection, and at every step,
+We will soon see that all the Enumerables we learn about will use a block this
+way. They all have the ability to step through a collection. At every step, they
 _yield_ some control to us via a block.
 
 ## Resources
