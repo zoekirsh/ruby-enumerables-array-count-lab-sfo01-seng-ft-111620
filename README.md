@@ -171,7 +171,7 @@ count_strings(array)
  # => 2
 ```
 
-### `count_empty_subarrays`
+### `count_empty_strings`
 
 The `count_empty_strings` method is a slight variation on the last method - it
 takes in an array of different data types and returns the total number of
