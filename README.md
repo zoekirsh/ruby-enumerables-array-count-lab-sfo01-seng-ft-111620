@@ -29,7 +29,7 @@ For this sort of task - "reducing" an **entire** array of data down to a single
 value - the three terms are interchangeable.
 
 However, `count` has additional functionality that `length` and `size` do not
-have. [`count` is an _enumerable_][count].
+have. [`count` is an _Enumerable_][count].
 
 In this lesson, we're going to take a more in-depth look at `count`, why it is
 different than `length` and `size`, and how it is useful. At the end, you will
