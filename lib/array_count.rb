@@ -9,3 +9,4 @@ def count_empty_strings(array)
     empty_string == ""
   end
 end
+
